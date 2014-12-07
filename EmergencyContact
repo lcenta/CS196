@@ -1,0 +1,62 @@
+package com.example.mylastnight;
+
+
+import java.util.*;
+
+public class EmergencyContact {
+
+    private static TreeMap<String, String> listofcontacts;
+
+    public EmergencyContact()
+    {
+        listofcontacts = new TreeMap<String, String>();
+    }
+    public void addContact(String name, long number)
+    {
+        String modi = name.replaceAll(name, "\\s").toLowerCase();
+        String toadd = "" + number;
+
+        listofcontacts.put(modi, toadd);
+    }
+
+    public String getContacts(String name)
+    {
+        String modi = name.replaceAll(name, "\\s").toLowerCase();
+        return (String)listofcontacts.get(modi);
+    }
+
+    public void deleteContact(String name)
+    {
+        String modi = name.replaceAll(name, "\\s").toLowerCase();
+        listofcontacts.remove(modi);
+    }
+
+    public void editContact(String name, long number)
+    {
+        String newnum = "" + number;
+        String modi = name.replaceAll(name, "\\s").toLowerCase();
+        listofcontacts.put(modi, newnum);
+    }
+
+    public static void sendMessageToAll()
+    {
+        Iterator it = listofcontacts.keySet().iterator();
+        while(it.hasNext())
+        {
+            String title = (String)it.next();
+            sendSms.sendSms(title);
+        }
+    }
+
+    public String toString()
+    {
+        Iterator it = listofcontacts.keySet().iterator();
+        String returning="";
+        while(it.hasNext())
+        {
+            String title = (String)it.next();
+            returning += title + ":" + listofcontacts.get(title) + "\n";
+        }
+        return returning;
+    }
+}
